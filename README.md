@@ -25,7 +25,6 @@
 ## Description
 
 پروژه زیرمجموعه گیری سعید عزیزی
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
 ## Installation
 
