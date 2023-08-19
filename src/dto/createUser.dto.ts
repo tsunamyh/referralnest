@@ -1,7 +1,7 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator";
 import { User } from "src/user/1userSchema";
 
-export class CreatUserDto {
+export class CreateUserDto {
   @IsNotEmpty()
   @MaxLength(30)
   @IsString()
@@ -12,17 +12,30 @@ export class CreatUserDto {
   @IsNotEmpty()
   readonly password: string;
   
-  @IsNotEmpty()
-  readonly referrals: User[];
+  // @IsNotEmpty()
+  // readonly referrals: User[];
   
   @IsString()
   @IsNotEmpty()
-  readonly refuser: string;
+  readonly refuser?: string;
   
   @IsNotEmpty()
   @IsEmail()
   readonly email: string;
   
-  @IsNotEmpty()
-  readonly createdat: Date;
+  // @IsNotEmpty()
+  // readonly createdat: Date;
 }
+
+// export class USER {
+//   @IsNotEmpty()
+//   @MaxLength(30)
+//   @IsString()
+//   readonly username: string;
+//   @IsString()
+//   @MaxLength(30)
+//   @IsNotEmpty()
+//   readonly password: string;
+
+//   refuser?: string
+// }
