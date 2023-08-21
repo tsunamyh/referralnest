@@ -13,9 +13,9 @@ export class User {
   referrals: mongoose.Schema.Types.ObjectId[];
 
   @Prop({ default: "Company" })
-  refuser: string;
+  referuser: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ required: true })
   email: string;
 
   @Prop({ default: new Date() })

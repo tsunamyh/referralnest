@@ -8,9 +8,9 @@ export class UserController {
   constructor(private userservice: UserService){}
 
   @Post()
-  insertUser(@Res() res: Response,@Body() createUserDto : CreateUserDto ){
+  async insertUser(@Res() res: Response,@Body() createUserDto : CreateUserDto ){
     try {
-      const newUser = this.userservice.saveUser(createUserDto)
+      const newUser = await this.userservice.saveUser(createUserDto)
       res.status(201).json({
         "message":"User saved!!",
         "newUser": newUser
@@ -18,5 +18,15 @@ export class UserController {
     } catch (error) {
       res.status(500).json(error)
     }
+  }
+  
+  @Get()
+  async getUsers(){
+    return await this.userservice.getAllUsers()
+  }
+
+  @Get('delete')
+  async deleteUser(){
+    return await this.userservice.deleteAllUsers()
   }
 }

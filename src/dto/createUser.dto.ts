@@ -15,9 +15,8 @@ export class CreateUserDto {
   // @IsNotEmpty()
   // readonly referrals: User[];
   
-  @IsString()
-  @IsNotEmpty()
-  readonly refuser?: string;
+  // @IsString()
+  readonly referuser?: string;
   
   @IsNotEmpty()
   @IsEmail()
