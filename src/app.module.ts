@@ -1,11 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UserSchema } from './user/1userSchema';
-import { ConfigModule } from '@nestjs/config';
-import { UserController } from './user/3userController';
-import { UserService } from './user/2userService';
+import { UserModule } from './user/4userModule';
 // import dotenv from "dotenv"
 
 
@@ -13,10 +9,9 @@ import { UserService } from './user/2userService';
 @Module({
   imports: [
     // ConfigModule.forRoot({isGlobal: true, envFilePath: `${process.env.NODE_ENV}.env` }),
-    MongooseModule.forRoot("mongodb://127.0.0.1:27017/refusernest"),
-    MongooseModule.forFeature([{ name: "User", schema: UserSchema }])
+    UserModule
   ],
-  controllers: [AppController,UserController],
-  providers: [AppService,UserService],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule { }

@@ -1,5 +1,5 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsString, MaxLength } from "class-validator";
-import { User } from "src/user/1userSchema";
+import { Peopole } from "src/user/1userSchema";
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -16,7 +16,7 @@ export class CreateUserDto {
   // readonly referrals: User[];
   
   // @IsString()
-  readonly referuser?: string;
+  readonly referuser: string;
   
   @IsNotEmpty()
   @IsEmail()

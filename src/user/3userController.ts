@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Res } from '@nestjs/common';
 import { UserService } from './2userService';
 import { CreateUserDto } from 'src/dto/createUser.dto';
 import { Response } from 'express';
@@ -19,14 +19,21 @@ export class UserController {
       res.status(500).json(error)
     }
   }
-  
+
   @Get()
   async getUsers(){
     return await this.userservice.getAllUsers()
   }
 
-  @Get('delete')
+  @Delete('delete')
   async deleteUser(){
     return await this.userservice.deleteAllUsers()
+  }
+
+  @Get(':name')
+  async getReferalls(@Param("name") username:string) {
+    console.log(username);
+    
+    return await this.userservice.getRefs(username)
   }
 }

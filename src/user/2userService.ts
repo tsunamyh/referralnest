@@ -6,34 +6,35 @@ import { CreateUserDto } from "src/dto/createUser.dto";
 
 @Injectable()
 export class UserService {
-  constructor(@InjectModel('User') private userModel: Model<Iuser>) { }
+  constructor(@InjectModel('user') private userModel: Model<Iuser>) { }
 
   async saveUser(createUserDto: CreateUserDto): Promise<Iuser | {}> {
-    console.log(createUserDto);
-
+    console.log("createUserDto:",createUserDto);
     // const newUser =  new this.userModel(createUserDto)
     // console.log("newUser",newUser); 
     // await newUser.save()
+   
+    if (createUserDto.referuser && !await this.existReffer(createUserDto.referuser)) {
+      return {
+        message: "referuser not exist in DataBase"
+      }
+    }
     try {
       const savedUser = await this.userModel.create(createUserDto)
-      console.log("savedUser", savedUser);
       if (createUserDto.referuser) {
         try {
-          const populated = await this.userModel.findOneAndUpdate({
+          await this.userModel.findOneAndUpdate({
             username: createUserDto.referuser
-          }, { "$push": { referrals: savedUser._id } },
-            { new: true })
-          console.log('populated:', populated);
-
-          return populated
+          }, { "$push": { referrals: savedUser._id } }); 
         } catch (error) {
           console.log("error:", error);
-
           return {
             message: error.message
           }
-        }
+        }   
       }
+
+      console.log("savedUser", savedUser);
       return savedUser
     } catch (error) {
       console.log("error(create):", error);
@@ -68,5 +69,25 @@ export class UserService {
         message: "Can NOT get all users"
       }
     }
+  }
+
+  async getRefs(username: string): Promise<Iuser[] | {}> {
+    try {
+      const refs = await this.userModel.findOne({ username })
+        .populate("referrals")
+      // .exec()
+      console.log("refs:", refs);
+      return refs
+    } catch (error) {
+      return {
+        message: "Can NOT get referrals users"
+      }
+    }
+  }
+
+  async existReffer(refferUser: string): Promise<Iuser | null> {
+    const existUser = await this.userModel.findOne({ referuser: refferUser })
+    console.log("existUser:",existUser);
+    return existUser
   }
 }
